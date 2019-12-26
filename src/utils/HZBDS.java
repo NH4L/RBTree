@@ -6,24 +6,32 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
+ * 后缀表达式类
  * @author lcy
  * @date 2019-12-26
  */
-public class hzBDS {
+public class HZBDS {
     public static void main(String[] args) {
-        System.out.println("该中缀表达式对应的后缀表达式为：");
-        hzBDS hz = new hzBDS();
+        HZBDS hz = new HZBDS();
         String myOpStr1 = "9+12/2+3-4*7";
-        myOpStr1 = "4*7+5-10*1.2+3.6+1.4-1.2*1.2+1*5";
-        myOpStr1 = "3*3*4/2+4/2/1*3-1*2*3+7-2+3";
-        Stack<CaculateUnit> myStack = hz.simple_getHZBDS(myOpStr1);
+//        myOpStr1 = "4*7+5-10*1.2+3.6+1.4-1.2*1.2+1*5";
+//        myOpStr1 = "3*3*4/2+4/2/1*3-1*2*3+7-2+3";
 
+        //求中缀表达式对应的后缀表达式
+        System.out.println("该中缀表达式对应的后缀表达式为：");
+        Stack<CaculateUnit> myStack = hz.simple_getHZBDS(myOpStr1);
         hz.debug(myStack);
+
+        //计算结果
         float res = hz.caculateHZS(myStack);
-        System.out.println("");
         System.out.println("计算结果为：" + res);
     }
 
+    /**
+     * 将中缀表达式字符串转化为后缀字符串
+     * @param originStr 原始中缀表达式字符串
+     * @return  后缀最表达式 栈
+     */
     public Stack<CaculateUnit> simple_getHZBDS(String originStr) {
         if (originStr == null || originStr.trim().length() <= 0) {
             return null;
@@ -113,11 +121,16 @@ public class hzBDS {
         return _ResultStack;
     }
 
+    /**
+     * 判断是否为高位
+     * @param c1 第一个计算单元
+     * @param c2 第二个计算单元
+     * @return 0，1，-1
+     */
     public int isHighLevel(CaculateUnit c1, CaculateUnit c2) {
         if (c1.type == CaculateType.Number || c2.type == CaculateType.Number) {
             return 0;
         }
-
         if (c1.type == CaculateType.DIV || c1.type == CaculateType.MUL) {
 
             if (c2.type == CaculateType.DIV || c2.type == CaculateType.MUL) {
@@ -125,59 +138,56 @@ public class hzBDS {
             }
             return 1;
         }
-
         if (c2.type == CaculateType.DIV || c2.type == CaculateType.MUL) {
             return -1;
         }
         return 0;
     }
 
-    public CaculateUnit getCaculateUnit(String str) {
-        if (str == null || str.trim().length() <= 0) {
-            return null;
-        }
-        return null;
-    }
-
+    /**
+     * 计算后缀表达式结果
+     * @param stack 栈
+     * @return 计算结果
+     */
     public float caculateHZS(Stack<CaculateUnit> stack) {
         float res = 0.0F;
-
-        ArrayList<CaculateUnit> _stackCopy = new ArrayList<>();
-
-        for (int i = 0; i < stack.size(); i++) {
-            _stackCopy.add(stack.get(i));
-        }
+        ArrayList<CaculateUnit> _stackCopy = new ArrayList<>(stack);
         int opLoc = 0;
         while (_stackCopy.size() > 1) {
-            int total1 = _stackCopy.size();
-            for (int ii = 0; ii < total1; ii++) {
-                CaculateUnit cUnit1 = _stackCopy.get(ii);
+            int size = _stackCopy.size();
+            for (int i = 0; i < size; i++) {
+                CaculateUnit cUnit1 = _stackCopy.get(i);
                 if (cUnit1.type == CaculateType.DIV || cUnit1.type == CaculateType.SUB || cUnit1.type == CaculateType.PLUS || cUnit1.type == CaculateType.MUL) {
-
                     CaculateUnit cUnit_res = new CaculateUnit();
-
                     if (cUnit1.type == CaculateType.SUB) {
-                        ((CaculateUnit) _stackCopy.get(ii - 2)).operationNumber -= ((CaculateUnit) _stackCopy.get(ii - 1)).operationNumber;
+                        ((CaculateUnit) _stackCopy.get(i - 2)).operationNumber -= ((CaculateUnit) _stackCopy.get(i - 1)).operationNumber;
+                        cUnit_res = ((CaculateUnit) _stackCopy.get(i - 2));
                     } else if (cUnit1.type == CaculateType.PLUS) {
-                        ((CaculateUnit) _stackCopy.get(ii - 2)).operationNumber += ((CaculateUnit) _stackCopy.get(ii - 1)).operationNumber;
+                        ((CaculateUnit) _stackCopy.get(i - 2)).operationNumber += ((CaculateUnit) _stackCopy.get(i - 1)).operationNumber;
+                        cUnit_res = ((CaculateUnit) _stackCopy.get(i - 2));
                     } else if (cUnit1.type == CaculateType.MUL) {
-                        ((CaculateUnit) _stackCopy.get(ii - 2)).operationNumber *= ((CaculateUnit) _stackCopy.get(ii - 1)).operationNumber;
+                        ((CaculateUnit) _stackCopy.get(i - 2)).operationNumber *= ((CaculateUnit) _stackCopy.get(i - 1)).operationNumber;
+                        cUnit_res = ((CaculateUnit) _stackCopy.get(i - 2));
                     } else if (cUnit1.type == CaculateType.DIV) {
-                        ((CaculateUnit) _stackCopy.get(ii - 2)).operationNumber /= ((CaculateUnit) _stackCopy.get(ii - 1)).operationNumber;
+                        ((CaculateUnit) _stackCopy.get(i - 2)).operationNumber /= ((CaculateUnit) _stackCopy.get(i - 1)).operationNumber;
+                        cUnit_res = ((CaculateUnit) _stackCopy.get(i - 2));
                     }
-                    _stackCopy.remove(ii);
-                    _stackCopy.remove(ii - 1);
-                    _stackCopy.remove(ii - 2);
-                    _stackCopy.add(ii - 2, cUnit_res);
+                    _stackCopy.remove(i);
+                    _stackCopy.remove(i - 1);
+                    _stackCopy.remove(i - 2);
+                    _stackCopy.add(i - 2, cUnit_res);
                     break;
                 }
             }
         }
-
         res = ((CaculateUnit) _stackCopy.get(0)).operationNumber;
         return res;
     }
 
+    /**
+     * 输出后缀表达式
+     * @param stack 栈
+     */
     public void debug(Stack<CaculateUnit> stack) {
         for (int i = 0; i < stack.size(); i++) {
             CaculateUnit iUnit = stack.get(i);
@@ -199,5 +209,6 @@ public class hzBDS {
                     break;
             }
         }
+        System.out.println('\n');
     }
 }
