@@ -46,7 +46,7 @@ public class RBTreeDemo extends JFrame {
 
     public RBTreeDemo() {
         setBackground(Color.WHITE);
-        setTitle("红黑树演示");
+        setTitle("红黑树");
         setDefaultCloseOperation(3);
         setBounds(100, 100, 450, 300);
         this.contentPane = new JPanel();

@@ -23,6 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+/**
+ * 手动调整红黑树 JFrame
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class RBTreeSEMIAUTO extends JFrame {
     private JPanel contentPane;
     private JTextField txt_indexNO;
@@ -38,10 +43,7 @@ public class RBTreeSEMIAUTO extends JFrame {
 
     private RBTreeGen _gen = new RBTreeGen();
     private RBTreeGen _genCopy = new RBTreeGen();
-
-
     private JButton btnNewButton_3;
-
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -56,7 +58,10 @@ public class RBTreeSEMIAUTO extends JFrame {
         });
     }
 
-
+    /**
+     * 构造函数
+     * @param _rootNode 根节点
+     */
     public RBTreeSEMIAUTO(TreeUnit _rootNode) {
         this();
         this._gen = new RBTreeGen(_rootNode);
@@ -64,6 +69,9 @@ public class RBTreeSEMIAUTO extends JFrame {
         this._genCopy = new RBTreeGen(_rootNode);
     }
 
+    /**
+     * 构造函数
+     */
     public RBTreeSEMIAUTO() {
         setTitle("手动调整红黑树");
 
