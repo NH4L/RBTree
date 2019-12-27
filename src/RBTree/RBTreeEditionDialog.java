@@ -21,6 +21,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+/**
+ * 手动修改红黑树 JDialog
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class RBTreeEditionDialog extends JDialog {
     private final JPanel contentPanel = new JPanel();
     private JPanel contentPane = this.contentPanel;
@@ -36,9 +41,7 @@ public class RBTreeEditionDialog extends JDialog {
     private JPanel panel_1;
     private JScrollPane scrollPane;
     private RBTreeCanvas treeCanvas = new RBTreeCanvas();
-
     private RBTreeGen _gen = new RBTreeGen();
-
 
     public static void main(String[] args) {
         try {
@@ -50,7 +53,9 @@ public class RBTreeEditionDialog extends JDialog {
         }
     }
 
-
+    /**
+     * 构造函数
+     */
     public RBTreeEditionDialog() {
         setBounds(100, 100, 450, 300);
         getContentPane().setLayout(new BorderLayout());
