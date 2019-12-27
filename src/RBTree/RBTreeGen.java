@@ -1,8 +1,12 @@
 package RBTree;
 
+/**
+ * 红黑树实体 RBTree
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class RBTreeGen {
     public TreeUnit _rootNode = null;
-    public TreeUnit _copyRootNode = null;
     private boolean search_result;
 
     public TreeUnit getRootNode() {
