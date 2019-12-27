@@ -20,7 +20,7 @@ public class HZBDS {
         //求中缀表达式对应的后缀表达式
         System.out.println("该中缀表达式对应的后缀表达式为：");
         Stack<CaculateUnit> myStack = hz.simple_getHZBDS(myOpStr1);
-        hz.debug(myStack);
+        hz.print(myStack);
 
         //计算结果
         float res = hz.caculateHZS(myStack);
@@ -188,7 +188,7 @@ public class HZBDS {
      * 输出后缀表达式
      * @param stack 栈
      */
-    public void debug(Stack<CaculateUnit> stack) {
+    public void print(Stack<CaculateUnit> stack) {
         for (int i = 0; i < stack.size(); i++) {
             CaculateUnit iUnit = stack.get(i);
             switch (iUnit.type) {
