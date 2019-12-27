@@ -23,6 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+/**
+ * 红黑树演示样例
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class RBTreeDemo extends JFrame {
     private JPanel contentPane;
     RBTreeCanvas treeCanvas = new RBTreeCanvas();
