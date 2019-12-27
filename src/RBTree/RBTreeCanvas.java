@@ -11,7 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JPanel;
 
-
+/**
+ * 红黑树画布
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class RBTreeCanvas extends JPanel {
     private mxGraph _graph = new mxGraph();
 
@@ -76,7 +80,6 @@ public class RBTreeCanvas extends JPanel {
             validate();
         }
     }
-
 
     private void initModelContainer(TreeUnit _currentUnit) {
         this._modelContainer.clear();
@@ -160,7 +163,6 @@ public class RBTreeCanvas extends JPanel {
             recursion_drawNode(_currentNode._rightChild, levelTotal * 2, index * 2 + 1, heightLevel + 1);
         }
     }
-
 
     private void drawRBTree() {
         this._maxNode = (int) Math.pow(2.0D, (this._modelContainer.size() - 1));
