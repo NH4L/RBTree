@@ -1,8 +1,12 @@
 package RBTree;
 
+/**
+ * 红黑树Demo原始数据
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class RBTreeDemoData {
     public RBTreeGen _gen = new RBTreeGen();
-
 
     public RBTreeDemoData() {
         TreeUnit _rootNode = createTreeUnit(null, 9.0F, false);
