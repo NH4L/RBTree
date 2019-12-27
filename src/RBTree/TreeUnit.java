@@ -1,6 +1,10 @@
 package RBTree;
 
-
+/**
+ * 红黑树单元
+ * @author lcy
+ * @date 2019-12-27
+ */
 public class TreeUnit {
     public String color = "red";
     public boolean isRed = true;
