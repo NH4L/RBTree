@@ -1,7 +1,7 @@
 package RBTree;
 
 public class GraphNodeViewModel {
-    public float indexNO = 0.0F;
+    public char indexNO = 'A';
     public boolean isRed = true;
     public int xIndex = 0;
     public int yIndex = 0;
