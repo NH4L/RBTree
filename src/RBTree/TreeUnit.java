@@ -8,7 +8,7 @@ package RBTree;
 public class TreeUnit {
     public String color = "red";
     public boolean isRed = true;
-    public float indexNO = 0.0F;
+    public char indexNO = 'A';
     public TreeUnit _parent = null;
 
     public TreeUnit _leftChild = null;
