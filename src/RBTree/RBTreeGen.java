@@ -37,7 +37,7 @@ public class RBTreeGen {
         }
     }
 
-    public boolean containsKey(float indexNO) {
+    public boolean containsKey(char indexNO) {
         this.search_result = false;
 
 
@@ -59,7 +59,7 @@ public class RBTreeGen {
         this.search_result = false;
     }
 
-    private void recursion_search(TreeUnit _currentNode, float indexNO) {
+    private void recursion_search(TreeUnit _currentNode, char indexNO) {
         if (_currentNode == null) {
             return;
         }
@@ -82,14 +82,18 @@ public class RBTreeGen {
         }
     }
 
-    private TreeUnit recursion_search_node(TreeUnit _currentNode, float indexNO) {
+    private TreeUnit recursion_search_node(TreeUnit _currentNode, char indexNO) {
+        System.out.println("当前节点:" + _currentNode.indexNO + "节点颜色：" + _currentNode.color);
         if (_currentNode == null) {
+            System.out.println("当前节点为空");
             return null;
         }
         if (indexNO == _currentNode.indexNO) {
+            System.out.println("找到该节点");
             return _currentNode;
         }
         if (indexNO < _currentNode.indexNO) {
+            System.out.println("当前节点比目标节点大");
             if (_currentNode._leftChild == null) {
                 return null;
             }
@@ -97,6 +101,7 @@ public class RBTreeGen {
         }
 
         if (indexNO > _currentNode.indexNO) {
+            System.out.println("当前节点比目标节点小");
             if (_currentNode._rightChild == null) {
                 return null;
             }
@@ -106,11 +111,11 @@ public class RBTreeGen {
     }
 
 
-    private TreeUnit search_node(float indexNO) {
+    private TreeUnit search_node(char indexNO) {
         return recursion_search_node(this._rootNode, indexNO);
     }
 
-    public boolean insert(float indexNO) {
+    public boolean insert(char indexNO) {
         if (this._rootNode == null) {
             this._rootNode = new TreeUnit();
             this._rootNode.indexNO = indexNO;
@@ -222,12 +227,12 @@ public class RBTreeGen {
         }
     }
 
-    public boolean ___turnLeft(float indexNO) {
+    public boolean ___turnLeft(char indexNO) {
         TreeUnit node = search_node(indexNO);
         return ___turnLeft(node);
     }
 
-    public boolean ___turnRight(float indexNO) {
+    public boolean ___turnRight(char indexNO) {
         TreeUnit currentNode = search_node(indexNO);
         return ___turnRight(currentNode);
     }
@@ -321,7 +326,7 @@ public class RBTreeGen {
     }
 
 
-    public boolean ___insert(float indexNO) {
+    public boolean ___insert(char indexNO) {
         if (this._rootNode == null) {
             this._rootNode = new TreeUnit();
             this._rootNode.indexNO = indexNO;
@@ -349,7 +354,7 @@ public class RBTreeGen {
         return false;
     }
 
-    public void ___fillRed(float indexNO) {
+    public void ___fillRed(char indexNO) {
         TreeUnit node = search_node(indexNO);
         if (node != null) {
             node.isRed = true;
@@ -357,7 +362,7 @@ public class RBTreeGen {
         }
     }
 
-    public void ___fillBlack(float indexNO) {
+    public void ___fillBlack(char indexNO) {
         TreeUnit node = search_node(indexNO);
         if (node != null) {
             node.isRed = false;
@@ -365,7 +370,7 @@ public class RBTreeGen {
         }
     }
 
-    private TreeUnit recursion_search_fitParentNode(TreeUnit _currentUnit, float indexNO) {
+    private TreeUnit recursion_search_fitParentNode(TreeUnit _currentUnit, char indexNO) {
         if (_currentUnit == null) {
             return null;
         }
@@ -388,7 +393,7 @@ public class RBTreeGen {
         return null;
     }
 
-    public boolean delete(float indexNO) {
+    public boolean delete(char indexNO) {
         TreeUnit originNode = search_node(indexNO);
         TreeUnit rec_node = null;
         TreeUnit nilNode = new TreeUnit();
@@ -576,17 +581,16 @@ public class RBTreeGen {
         }
 
 
-        boolean isLeft = true;
+        boolean isLeft;
 
         if (currentUnit.isNIL) {
             if (currentUnit._parent._leftChild.isNIL) {
+                System.out.println("兄弟节点不为空");
                 isLeft = true;
             } else {
-
+                System.out.println("兄弟节点为空");
                 isLeft = false;
-
             }
-
         } else if (currentUnit._parent._leftChild.indexNO == currentUnit.indexNO) {
             isLeft = true;
         } else {
@@ -596,7 +600,7 @@ public class RBTreeGen {
 
         TreeUnit grandFatherNode = null;
         TreeUnit parentNode = currentUnit._parent;
-        float parentIndexNO = parentNode.indexNO;
+        char parentIndexNO = parentNode.indexNO;
         TreeUnit brotherNode = null;
         TreeUnit nearNePhewNode = null;
         TreeUnit farNephewNode = null;
