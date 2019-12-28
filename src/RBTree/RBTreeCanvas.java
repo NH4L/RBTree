@@ -48,13 +48,13 @@ public class RBTreeCanvas extends JPanel {
         return res;
     }
 
-    public void setSelected(float indexNO) {
+    public void setSelected(char indexNO) {
         for (Map.Entry<String, Object> entry : this._nodeContainer.entrySet()) {
             String keyName = entry.getKey();
             Object value = entry.getValue();
             if (keyName.contains("key")) {
                 String str1 = keyName.replace("key", "");
-                if (StringUtil.toFloat(str1) == indexNO) {
+                if (str1.charAt(0) == indexNO) {
                     this._graph.setSelectionCell(value);
                     break;
                 }
@@ -148,7 +148,7 @@ public class RBTreeCanvas extends JPanel {
         int nodeAreaWidth = this._panelWidth / levelTotal;
         currentLocX = nodeAreaWidth * index + nodeAreaWidth / 2 - this._treeNodeWidth;
 
-        Object cellObject = this._graph.insertVertex(this._graph.getDefaultParent(), null, Float.valueOf(_currentNode.indexNO), currentLocX, currentLocY, this._treeNodeWidth, this._treeNodeHeight, style);
+        Object cellObject = this._graph.insertVertex(this._graph.getDefaultParent(), null, Character.valueOf(_currentNode.indexNO), currentLocX, currentLocY, this._treeNodeWidth, this._treeNodeHeight, style);
         this._nodeContainer.put("key" + _currentNode.indexNO, cellObject);
         if (_currentNode._parent != null) {
             Object parentCell = this._nodeContainer.get("key" + _currentNode._parent.indexNO);
@@ -208,7 +208,7 @@ public class RBTreeCanvas extends JPanel {
                 if (!_litem2.isRed) {
                     style = "shape=ellipse;fillColor=black;fontColor=white;Align=Left;fontSize=14;";
                 }
-                Object cellObject = this._graph.insertVertex(this._graph.getDefaultParent(), null, Float.valueOf(_litem2.indexNO), locX, locY, this._treeNodeWidth, this._treeNodeHeight, style);
+                Object cellObject = this._graph.insertVertex(this._graph.getDefaultParent(), null, Character.valueOf(_litem2.indexNO), locX, locY, this._treeNodeWidth, this._treeNodeHeight, style);
 
 
                 _litem2._cellObject = cellObject;
@@ -223,12 +223,8 @@ public class RBTreeCanvas extends JPanel {
                     Object edgeObject = this._graph.insertEdge(this._graph.getDefaultParent(), null, "", _litem2._parent._cellObject, cellObject, "stockColor=yellow");
                     this._nodeContainer.put("edge_parent_" + _litem2._parent.indexNO + "_self_" + _litem2.indexNO, edgeObject);
                 }
-
-
                 xIndex++;
             }
-
-
             cindex++;
         }
     }
