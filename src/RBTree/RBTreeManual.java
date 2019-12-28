@@ -1,6 +1,5 @@
 package RBTree;
 
-import Easis.Common.StringUtil;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
@@ -28,7 +27,7 @@ import javax.swing.border.TitledBorder;
  * @author lcy
  * @date 2019-12-27
  */
-public class RBTreeSEMIAUTO extends JFrame {
+public class RBTreeManual extends JFrame {
     private JPanel contentPane;
     private JTextField txt_indexNO;
     private JButton btnNewButton;
@@ -49,7 +48,8 @@ public class RBTreeSEMIAUTO extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    RBTreeSEMIAUTO frame = new RBTreeSEMIAUTO();
+                    org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+                    RBTreeManual frame = new RBTreeManual();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -62,7 +62,7 @@ public class RBTreeSEMIAUTO extends JFrame {
      * 构造函数
      * @param _rootNode 根节点
      */
-    public RBTreeSEMIAUTO(TreeUnit _rootNode) {
+    public RBTreeManual(TreeUnit _rootNode) {
         this();
         this._gen = new RBTreeGen(_rootNode);
         this.treeCanvas.paintRBTree(this._gen._rootNode);
@@ -72,7 +72,7 @@ public class RBTreeSEMIAUTO extends JFrame {
     /**
      * 构造函数
      */
-    public RBTreeSEMIAUTO() {
+    public RBTreeManual() {
         setTitle("手动调整红黑树");
 
         setBounds(100, 100, 450, 300);
@@ -103,64 +103,72 @@ public class RBTreeSEMIAUTO extends JFrame {
         this.btnNewButton = new JButton("插入节点");
         this.btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
-
+                if (RBTreeManual.this._gen._rootNode == null) {
                     JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
                     return;
                 }
-                float indexNO1 = 0.0F;
+                char indexNO1 = 'A';
                 try {
-                    indexNO1 = Float.parseFloat(RBTreeSEMIAUTO.this.txt_indexNO.getText());
+                    String input = RBTreeManual.this.txt_indexNO.getText();
+                    System.out.println("插入字符为：" + input);
+                    if (input == null || input.equals("")) {
+                        JOptionPane.showMessageDialog(null, "必须输入字符！");
+                        return;
+                    }
+                    if (input.length()>1) {
+                        JOptionPane.showMessageDialog(null, "必须输入单个字符！");
+                        return;
+                    }
+                    indexNO1 = input.charAt(0);
+
                 } catch (Exception ef) {
                     ef.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "无法将关键字转换成为小数！请检查您的输入！");
-
                     return;
                 }
 
-                if (RBTreeSEMIAUTO.this._gen.containsKey(indexNO1)) {
+                if (RBTreeManual.this._gen.containsKey(indexNO1)) {
                     JOptionPane.showMessageDialog(null, "红黑树里面已经存在【" + indexNO1 + "】，请输入其他关键字或者删除此关键字再尝试。", "无法插入关键字", 2);
-                    RBTreeSEMIAUTO.this.treeCanvas.setSelected(indexNO1);
+                    RBTreeManual.this.treeCanvas.setSelected(indexNO1);
                     return;
                 }
-                RBTreeSEMIAUTO.this._gen.___insert(indexNO1);
-                RBTreeSEMIAUTO.this.treeCanvas.paintRBTree(RBTreeSEMIAUTO.this._gen._rootNode);
+                RBTreeManual.this._gen.___insert(indexNO1);
+                RBTreeManual.this.treeCanvas.paintRBTree(RBTreeManual.this._gen._rootNode);
             }
         });
         this.btnNewButton.setBackground(Color.WHITE);
         panel.add(this.btnNewButton);
 
-        this.btnNewButton_1 = new JButton("删除节点");
-        this.btnNewButton_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
-
-                    JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
-                    return;
-                }
-            }
-        });
-        this.btnNewButton_1.setBackground(Color.WHITE);
-        panel.add(this.btnNewButton_1);
+//        this.btnNewButton_1 = new JButton("删除节点");
+//        this.btnNewButton_1.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                if (RBTreeManual.this._gen._rootNode == null) {
+//
+//                    JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
+//                    return;
+//                }
+//            }
+//        });
+//        this.btnNewButton_1.setBackground(Color.WHITE);
+//        panel.add(this.btnNewButton_1);
 
         this.btnNewButton_2 = new JButton("染红");
         this.btnNewButton_2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
+                if (RBTreeManual.this._gen._rootNode == null) {
 
                     JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
                     return;
                 }
-                Object selectedObj = RBTreeSEMIAUTO.this.treeCanvas.getSelectIndex();
+                Object selectedObj = RBTreeManual.this.treeCanvas.getSelectIndex();
                 if (selectedObj == null) {
                     JOptionPane.showMessageDialog(null, "您尚未选中任何记录。", "警告", 1);
 
                     return;
                 }
 
-                RBTreeSEMIAUTO.this._gen.___fillRed(StringUtil.toFloat(selectedObj.toString()));
-                RBTreeSEMIAUTO.this.treeCanvas.paintRBTree(RBTreeSEMIAUTO.this._gen._rootNode);
-                RBTreeSEMIAUTO.this.treeCanvas.setSelected(StringUtil.toFloat(selectedObj.toString()));
+                RBTreeManual.this._gen.___fillRed(selectedObj.toString().charAt(0));
+                RBTreeManual.this.treeCanvas.paintRBTree(RBTreeManual.this._gen._rootNode);
+                RBTreeManual.this.treeCanvas.setSelected(selectedObj.toString().charAt(0));
             }
         });
 
@@ -170,21 +178,21 @@ public class RBTreeSEMIAUTO extends JFrame {
         this.button = new JButton("染黑");
         this.button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
+                if (RBTreeManual.this._gen._rootNode == null) {
 
                     JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
                     return;
                 }
-                Object selectedObj = RBTreeSEMIAUTO.this.treeCanvas.getSelectIndex();
+                Object selectedObj = RBTreeManual.this.treeCanvas.getSelectIndex();
                 if (selectedObj == null) {
                     JOptionPane.showMessageDialog(null, "您尚未选中任何记录。", "警告", 1);
 
                     return;
                 }
 
-                RBTreeSEMIAUTO.this._gen.___fillBlack(StringUtil.toFloat(selectedObj.toString()));
-                RBTreeSEMIAUTO.this.treeCanvas.paintRBTree(RBTreeSEMIAUTO.this._gen._rootNode);
-                RBTreeSEMIAUTO.this.treeCanvas.setSelected(StringUtil.toFloat(selectedObj.toString()));
+                RBTreeManual.this._gen.___fillBlack(selectedObj.toString().charAt(0));
+                RBTreeManual.this.treeCanvas.paintRBTree(RBTreeManual.this._gen._rootNode);
+                RBTreeManual.this.treeCanvas.setSelected(selectedObj.toString().charAt(0));
             }
         });
         this.button.setBackground(Color.WHITE);
@@ -193,31 +201,27 @@ public class RBTreeSEMIAUTO extends JFrame {
         this.button_1 = new JButton("左旋");
         this.button_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
+                if (RBTreeManual.this._gen._rootNode == null) {
 
                     JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
                     return;
                 }
-                Object selectedObj = RBTreeSEMIAUTO.this.treeCanvas.getSelectIndex();
+                Object selectedObj = RBTreeManual.this.treeCanvas.getSelectIndex();
                 if (selectedObj == null) {
                     JOptionPane.showMessageDialog(null, "您尚未选中任何记录。", "警告", 1);
                     return;
                 }
-                float f1 = 0.0F;
-
+                char f1 = 'A';
                 try {
-                    f1 = Float.parseFloat(selectedObj.toString());
-
-
+                    f1 = selectedObj.toString().charAt(0);
                 } catch (Exception ed) {
                     ed.printStackTrace();
                     JOptionPane.showMessageDialog(null, "您选中的节点并非可用数据节点！", "错误", 0);
-
                     return;
                 }
 
-                RBTreeSEMIAUTO.this._gen.___turnLeft(f1);
-                RBTreeSEMIAUTO.this.treeCanvas.paintRBTree(RBTreeSEMIAUTO.this._gen._rootNode);
+                RBTreeManual.this._gen.___turnLeft(f1);
+                RBTreeManual.this.treeCanvas.paintRBTree(RBTreeManual.this._gen._rootNode);
             }
         });
         this.button_1.setBackground(Color.WHITE);
@@ -226,31 +230,28 @@ public class RBTreeSEMIAUTO extends JFrame {
         this.button_2 = new JButton("右旋");
         this.button_2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
+                if (RBTreeManual.this._gen._rootNode == null) {
 
                     JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
                     return;
                 }
-                Object selectedObj = RBTreeSEMIAUTO.this.treeCanvas.getSelectIndex();
+                Object selectedObj = RBTreeManual.this.treeCanvas.getSelectIndex();
                 if (selectedObj == null) {
                     JOptionPane.showMessageDialog(null, "您尚未选中任何记录。", "警告", 1);
                     return;
                 }
-                float f1 = 0.0F;
+                char f1 = 'A';
 
                 try {
-                    f1 = Float.parseFloat(selectedObj.toString());
-
-
+                    f1 = selectedObj.toString().charAt(0);
                 } catch (Exception ed) {
                     ed.printStackTrace();
                     JOptionPane.showMessageDialog(null, "您选中的节点并非可用数据节点！", "错误", 0);
-
                     return;
                 }
 
-                RBTreeSEMIAUTO.this._gen.___turnRight(f1);
-                RBTreeSEMIAUTO.this.treeCanvas.paintRBTree(RBTreeSEMIAUTO.this._gen._rootNode);
+                RBTreeManual.this._gen.___turnRight(f1);
+                RBTreeManual.this.treeCanvas.paintRBTree(RBTreeManual.this._gen._rootNode);
             }
         });
         this.button_2.setBackground(Color.WHITE);
@@ -259,14 +260,12 @@ public class RBTreeSEMIAUTO extends JFrame {
         this.btnNewButton_3 = new JButton("重做");
         this.btnNewButton_3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (RBTreeSEMIAUTO.this._gen._rootNode == null) {
-
+                if (RBTreeManual.this._gen._rootNode == null) {
                     JOptionPane.showMessageDialog(null, "您需要修改的红黑树为空，请按照正常流程使用该程序。", "警告", 1);
-
                     return;
                 }
-                RBTreeSEMIAUTO.this._gen = new RBTreeGen(RBTreeSEMIAUTO.this._genCopy._rootNode);
-                RBTreeSEMIAUTO.this.treeCanvas.paintRBTree(RBTreeSEMIAUTO.this._gen._rootNode);
+                RBTreeManual.this._gen = new RBTreeGen(RBTreeManual.this._genCopy._rootNode);
+                RBTreeManual.this.treeCanvas.paintRBTree(RBTreeManual.this._gen._rootNode);
             }
         });
 
