@@ -28,19 +28,20 @@ import javax.swing.border.TitledBorder;
  * @author lcy
  * @date 2019-12-27
  */
-public class RBTreeDemo extends JFrame {
+public class RBTreeShow extends JFrame {
     private JPanel contentPane;
     RBTreeCanvas treeCanvas = new RBTreeCanvas();
     private JTextField txt_indexNO;
     JCheckBox cbox_showDetails;
     private RBTreeGen _gen = new RBTreeGen();
-    private RBTreeDemoData _demoData = new RBTreeDemoData();
+    private RBTreeShowData _demoData = new RBTreeShowData();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    RBTreeDemo frame = new RBTreeDemo();
+                    org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper.launchBeautyEyeLNF();
+                    RBTreeShow frame = new RBTreeShow();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -49,7 +50,7 @@ public class RBTreeDemo extends JFrame {
         });
     }
 
-    public RBTreeDemo() {
+    public RBTreeShow() {
         setBackground(Color.WHITE);
         setTitle("红黑树");
         setDefaultCloseOperation(3);
@@ -70,7 +71,7 @@ public class RBTreeDemo extends JFrame {
         this.contentPane.add(panel_1, "1, 1, fill, fill");
         panel_1.setLayout(new FlowLayout(0, 5, 5));
 
-        JLabel label = new JLabel("插入关键字:");
+        JLabel label = new JLabel("插入字符:");
         panel_1.add(label);
 
         this.txt_indexNO = new JTextField();
@@ -82,21 +83,31 @@ public class RBTreeDemo extends JFrame {
         JButton button = new JButton("插入");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                float indexNO1 = 0.0F;
+                char indexNO1 = 'A';
                 try {
-                    indexNO1 = Float.parseFloat(RBTreeDemo.this.txt_indexNO.getText());
+                    String input = RBTreeShow.this.txt_indexNO.getText();
+                    if (input == null) {
+                        JOptionPane.showMessageDialog(null, "必须输入字符！");
+                        return;
+                    }
+                    if (input.length()>1) {
+                        JOptionPane.showMessageDialog(null, "必须输入单个字符！");
+                        return;
+                    }
+                    indexNO1 = input.charAt(0);
+
                 } catch (Exception ef) {
                     ef.printStackTrace();
                     JOptionPane.showMessageDialog(null, "无法将关键字转换成为小数！请检查您的输入！");
                     return;
                 }
-                if (RBTreeDemo.this._gen.containsKey(indexNO1)) {
+                if (RBTreeShow.this._gen.containsKey(indexNO1)) {
                     JOptionPane.showMessageDialog(null, "红黑树里面已经存在【" + indexNO1 + "】，请输入其他关键字或者删除此关键字再尝试。", "无法插入关键字", 2);
-                    RBTreeDemo.this.treeCanvas.setSelected(indexNO1);
+                    RBTreeShow.this.treeCanvas.setSelected(indexNO1);
                     return;
                 }
-                RBTreeDemo.this._gen.insert(indexNO1);
-                RBTreeDemo.this.treeCanvas.paintRBTree(RBTreeDemo.this._gen._rootNode);
+                RBTreeShow.this._gen.insert(indexNO1);
+                RBTreeShow.this.treeCanvas.paintRBTree(RBTreeShow.this._gen._rootNode);
             }
         });
 
@@ -106,16 +117,16 @@ public class RBTreeDemo extends JFrame {
         JButton button_1 = new JButton("删除选中节点");
         button_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Object selectedObj = RBTreeDemo.this.treeCanvas.getSelectIndex();
+                Object selectedObj = RBTreeShow.this.treeCanvas.getSelectIndex();
                 if (selectedObj == null) {
                     JOptionPane.showMessageDialog(null, "您尚未选中任何记录。", "警告", 1);
 
                     return;
                 }
-
-                float f1 = 0.0F;
+                System.out.println("当前选中节点：" + selectedObj.toString());
+                char f1 = 'A';
                 try {
-                    f1 = Float.parseFloat(selectedObj.toString());
+                    f1 = selectedObj.toString().charAt(0);
                 } catch (Exception ed) {
                     ed.printStackTrace();
                     JOptionPane.showMessageDialog(null, "您尚未选中任何节点。", "警告", 1);
@@ -123,8 +134,8 @@ public class RBTreeDemo extends JFrame {
                     return;
                 }
 
-                RBTreeDemo.this._gen.delete(f1);
-                RBTreeDemo.this.treeCanvas.paintRBTree(RBTreeDemo.this._gen._rootNode);
+                RBTreeShow.this._gen.delete(f1);
+                RBTreeShow.this.treeCanvas.paintRBTree(RBTreeShow.this._gen._rootNode);
             }
         });
 
@@ -134,8 +145,8 @@ public class RBTreeDemo extends JFrame {
         JButton button_2 = new JButton("采用默认数据");
         button_2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                RBTreeDemo.this._gen = new RBTreeGen(RBTreeDemo.this._demoData._gen._rootNode);
-                RBTreeDemo.this.treeCanvas.paintRBTree(RBTreeDemo.this._gen._rootNode);
+                RBTreeShow.this._gen = new RBTreeGen(RBTreeShow.this._demoData._gen._rootNode);
+                RBTreeShow.this.treeCanvas.paintRBTree(RBTreeShow.this._gen._rootNode);
             }
         });
 
@@ -148,8 +159,8 @@ public class RBTreeDemo extends JFrame {
                 EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         try {
-//                        RBTreeSEMIAUTO bSemiauto = new RBTreeSEMIAUTO((RBTreeDemo.null.access$0(RBTreeDemo.null.this))._gen._rootNode);
-                            RBTreeSEMIAUTO bSemiauto = new RBTreeSEMIAUTO(RBTreeDemo.this._gen._rootNode);
+//                        RBTreeManual bSemiauto = new RBTreeManual((RBTreeShow.null.access$0(RBTreeShow.null.this))._gen._rootNode);
+                            RBTreeManual bSemiauto = new RBTreeManual(RBTreeShow.this._gen._rootNode);
                             bSemiauto.setVisible(true);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -166,10 +177,10 @@ public class RBTreeDemo extends JFrame {
         JLabel label_2 = new JLabel("     ");
         panel_1.add(label_2);
 
-        this.cbox_showDetails = new JCheckBox("显示红黑树具体调整步骤");
-        this.cbox_showDetails.setSelected(true);
-        this.cbox_showDetails.setBackground(Color.WHITE);
-        panel_1.add(this.cbox_showDetails);
+//        this.cbox_showDetails = new JCheckBox("显示红黑树具体调整步骤");
+//        this.cbox_showDetails.setSelected(true);
+//        this.cbox_showDetails.setBackground(Color.WHITE);
+//        panel_1.add(this.cbox_showDetails);
 
 
         JPanel panel = new JPanel();
@@ -181,9 +192,7 @@ public class RBTreeDemo extends JFrame {
         JScrollPane scrollPane = new JScrollPane();
         panel.add(scrollPane, "Center");
 
-
         scrollPane.setViewportView(this.treeCanvas);
-
         setSize(800, 600);
     }
 }
